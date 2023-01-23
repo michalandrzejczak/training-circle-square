@@ -1,17 +1,19 @@
-<ox-field>
-    <button class="button button-outline" onclick="{ () => sendSetField() }">{ state.value }</button>
+<ox-field onclick="{ () => sendSetField() }">
+    { state.value }
     <script>
     export default {
       async onMounted() {
+        console.log(`${this.props.fieldId} mounted`)
         this.update({
           value: ''
         })
         this.appState.oxFields[this.props.fieldId] = this;
-        this.hub.invoke("GetField", this.props.fieldId);
+
       },
       sendSetField() {
         try {
             this.hub.invoke("SetField", this.props.fieldId);
+            console.log()
         } catch (err) {
             console.error(err);
         }

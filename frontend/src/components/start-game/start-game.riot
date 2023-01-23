@@ -1,0 +1,31 @@
+<start-game>
+    <div if={ this.state.showFieldValueChoose } style="text-align: center">
+        <div>Choose starting symbol</div>
+        <div class="row" style="justify-content: center">
+            <button class="button" onclick="{ () => startNewGame('X') }">X</button>
+            <button class="button" onclick="{ () => startNewGame('O') }">O</button>
+        </div>
+    </div>
+    <button class="button button-outline" onclick="{ () => chooseYourFighter() }">Start new game</button>
+    <script>
+    export default {
+        chooseYourFighter() {
+            this.update({
+                showFieldValueChoose: true
+            })
+            this.appState.currentFieldValue.update({ value: '' });
+        },
+
+        startNewGame(fieldValue) {
+            try {
+                this.hub.invoke("StartNewGame", fieldValue);
+                this.update({
+                    showFieldValueChoose: false
+                })
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    }
+  </script>
+</start-game>
